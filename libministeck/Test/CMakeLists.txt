@@ -4,6 +4,7 @@ find_package (GTest)
 add_executable(libministecktest
   ColorsTest.cpp
   libministeckMain.cpp
+  MinisteckTest.cpp
   )
 
 include_directories( ${GTEST_INCLUDE_DIRS})

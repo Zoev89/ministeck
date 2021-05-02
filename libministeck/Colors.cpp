@@ -35,6 +35,7 @@ namespace
 Colors::Colors()
 {
     boost::property_tree::ptree tree;
+    // create an array stream object without coping data
     boost::iostreams::stream<boost::iostreams::array_source> stream(g_ColorXml.c_str(), g_ColorXml.size());
     boost::property_tree::read_xml(stream, tree);
     for(auto const & it: tree.get_child("colors"))

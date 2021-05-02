@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "IMinisteck.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,8 +15,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+public slots:
+    void actionOpen();
+    void actionNew();
+    void actionAddImageFile();
 private:
+    void CreateMinisteck(std::string path);
     Ui::MainWindow *ui;
+    std::unique_ptr<IMinisteck> m_ministeck;
 };
 #endif // MAINWINDOW_H
