@@ -12,7 +12,7 @@ class LibMiniSteckBuilder
 public:
     LibMiniSteckBuilder();
     static std::unique_ptr<IColors> CreateIColors();
-    static std::unique_ptr<IMinisteck> CreateIMinisteck(const std::filesystem::path &path, std::function<void(bool)> hasImageFile);
+    static std::unique_ptr<IMinisteck> CreateIMinisteck(const std::filesystem::path &path, std::function<void(const IMinisteck &, bool)> hasImageFile);
 };
 
 #endif // LIBMINISTECKBUILDER_H

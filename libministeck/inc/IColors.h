@@ -1,14 +1,9 @@
+#pragma once
+
 #include <vector>
 #include <string>
+#include "IColorTypes.h"
 
-struct Color
-{
-    int colorNummer;
-    std::string naam;
-    int r;
-    int g;
-    int b;
-};
 
 class IColors
 {
@@ -17,4 +12,16 @@ public:
     virtual std::vector<Color> GetColors() = 0;
 protected:
     IColors() = default;
+};
+
+
+class IColorConverter
+{
+public:
+    virtual ~IColorConverter() = default;
+    virtual Lab Rgb2Lab(Rgb rgb) = 0;
+    virtual Rgb Lab2Rgb(Lab lab) = 0;
+protected:
+    IColorConverter() = default;
+
 };

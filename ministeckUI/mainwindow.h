@@ -19,9 +19,12 @@ public slots:
     void actionOpen();
     void actionNew();
     void actionAddImageFile();
+    void actionSettings();
 private:
     void CreateMinisteck(std::string path);
     Ui::MainWindow *ui;
     std::unique_ptr<IMinisteck> m_ministeck;
+    std::shared_ptr<cv::Mat> m_rgbImage;
+    QImage m_image;
 };
 #endif // MAINWINDOW_H

@@ -13,7 +13,7 @@ std::unique_ptr<IColors> LibMiniSteckBuilder::CreateIColors()
 
 }
 
-std::unique_ptr<IMinisteck> LibMiniSteckBuilder::CreateIMinisteck(const std::filesystem::path &path, std::function<void(bool)> hasImageFile)
+std::unique_ptr<IMinisteck> LibMiniSteckBuilder::CreateIMinisteck(const std::filesystem::path &path, std::function<void(const IMinisteck &,bool)> hasImageFile)
 {
     return std::make_unique<Ministeck>(path, hasImageFile);
 }

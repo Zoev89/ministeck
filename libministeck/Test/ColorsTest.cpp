@@ -24,6 +24,7 @@ protected:
 
 TEST_F (ColorsTest, UnitTest1)
 {
+    Rgb color;
     auto colors = m_colors->GetColors();
     EXPECT_EQ(2, colors.size());
 }

@@ -22,11 +22,11 @@ namespace
             <color>\
                 <naam>Wit</naam>\
                 <nummer>2</nummer>\
-                <luv>\
-                    <l>1</l>\
-                    <u>1</u>\
-                    <v>1</v>\
-                </luv>\
+                <rgb>\
+                    <r>255</r>\
+                    <g>255</g>\
+                    <b>255</b>\
+                </rgb>\
             </color>\
         </colors>\
     ");
@@ -46,14 +46,9 @@ Colors::Colors()
         boost::optional< const boost::property_tree::ptree& > rgb = it.second.get_child_optional("rgb");
         if( rgb )
         {
-            color.r = it.second.get<int>("rgb.r");
-            color.g = it.second.get<int>("rgb.g");
-            color.b = it.second.get<int>("rgb.b");
-        }
-        boost::optional< const boost::property_tree::ptree& > luv = it.second.get_child_optional("luv");
-        if( luv )
-        {
-             //std::cout << "Luv" << std::endl;
+            color.rgb.r = it.second.get<int>("rgb.r");
+            color.rgb.g = it.second.get<int>("rgb.g");
+            color.rgb.b = it.second.get<int>("rgb.b");
         }
         m_colors.emplace_back(color);
     }

@@ -1,5 +1,7 @@
 #find_package (GMock)
 find_package (GTest)
+find_package(OpenCV REQUIRED)
+#find_package(CImg REQUIRED)
 
 add_executable(libministecktest
   ColorsTest.cpp
@@ -8,5 +10,5 @@ add_executable(libministecktest
   )
 
 include_directories( ${GTEST_INCLUDE_DIRS})
-target_link_libraries(libministecktest libministeck ${GTEST_LIBRARIES} pthread)
+target_link_libraries(libministecktest libministeck ${OpenCV_LIBS} ${GTEST_LIBRARIES} pthread X11)
 
