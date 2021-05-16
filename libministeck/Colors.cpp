@@ -5,6 +5,7 @@
 #include <boost/optional.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <iostream>
+#include "IColorConverter.h"
 
 namespace
 {
@@ -32,7 +33,8 @@ namespace
     ");
 }
 
-Colors::Colors()
+Colors::Colors(std::unique_ptr<IColorConverter> colorConverter)
+    :m_colorConverter(std::move(colorConverter))
 {
     boost::property_tree::ptree tree;
     // create an array stream object without coping data
@@ -49,6 +51,7 @@ Colors::Colors()
             color.rgb.r = it.second.get<int>("rgb.r");
             color.rgb.g = it.second.get<int>("rgb.g");
             color.rgb.b = it.second.get<int>("rgb.b");
+            color.lab = m_colorConverter->Rgb2Lab(color.rgb);
         }
         m_colors.emplace_back(color);
     }

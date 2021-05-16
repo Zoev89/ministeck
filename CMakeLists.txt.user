@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.13.2, 2021-05-15T20:38:19. -->
+<!-- Written by QtCreator 4.13.2, 2021-05-16T16:42:05. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -65,6 +65,9 @@
     <value type="bool" key="AutoTest.Framework.QtTest">true</value>
    </valuemap>
    <valuemap type="QVariantMap" key="AutoTest.CheckStates">
+    <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/ColorConverterTest.cpp:ColorConverterTest">Checked</value>
+    <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/ColorConverterTest.cpp:Lab2Rgb">Checked</value>
+    <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/ColorConverterTest.cpp:Rgb2Lab">Checked</value>
     <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/ColorsTest.cpp:ColorsTest">Checked</value>
     <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/ColorsTest.cpp:UnitTest1">Checked</value>
     <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/MinisteckTest.cpp:AddImageFile">Checked</value>

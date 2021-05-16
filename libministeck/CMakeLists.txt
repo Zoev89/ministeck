@@ -8,6 +8,7 @@ add_library(libministeck
     Ministeck.cpp Ministeck.h
     inc/IColorTypes.h
     Colors.cpp Colors.h inc/IColors.h
+    ColorConverter.cpp ColorConverter.h inc/IColorConverter.h inc/test/IColorConverterMock.h
     libMinisteckBuilder.cpp inc/libMinisteckBuilder.h
 )
 

@@ -50,10 +50,12 @@ struct Color
     int colorNummer;
     std::string naam;
     Rgb rgb;
+    Lab lab;
     bool operator==(const Color &lhs) const
     {
-        return (colorNummer==lhs.colorNummer)
-                && (naam==lhs.naam)
-                && (rgb==lhs.rgb);
+        return (colorNummer == lhs.colorNummer)
+                && (naam == lhs.naam)
+                && (rgb == lhs.rgb)
+                && lab == lhs.lab;
     };
 };
