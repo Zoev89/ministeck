@@ -4,15 +4,26 @@
 #include <boost/property_tree/detail/xml_parser_writer_settings.hpp>
 #include <iostream>
 
+#include "IColors.h"
+#include "IQuantize.h"
+#include "IScaledOutputImage.h"
+
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 
-Ministeck::Ministeck(const std::filesystem::path &path, std::function<void(const IMinisteck &,bool)> hasImageFile)
-    : m_path(path)
+Ministeck::Ministeck(const std::filesystem::path &path, std::function<void(const IMinisteck &,bool)> hasImageFile
+                     , std::unique_ptr<IColors> colors
+                     , std::unique_ptr<IQuantize> quantize
+                     , std::unique_ptr<IScaledOutputImage> scaledOuputImage)
+    : m_colors(std::move(colors))
+    , m_quantize(std::move(quantize))
+    , m_scaledOuputImage(std::move(scaledOuputImage))
+    , m_path(path)
     , m_hasImageFile(hasImageFile)
 {
+    m_colorVec = m_colors->GetColors();
     if (std::filesystem::exists(m_path))
     {
         boost::property_tree::ptree tree;
@@ -25,22 +36,22 @@ Ministeck::Ministeck(const std::filesystem::path &path, std::function<void(const
             boost::optional<int> value = tree.get_optional<int>("doc.offsetX");
             if(value)
             {
-                m_imageOffsetX = value.get();
+                m_baseplate.imageOffsetX = value.get();
             }
             value = tree.get_optional<int>("doc.offsetY");
             if(value)
             {
-                m_imageOffsetY = value.get();
+                m_baseplate.imageOffsetY = value.get();
             }
             value = tree.get_optional<int>("doc.baseplateWidth");
             if(value)
             {
-                m_baseplateWidth = value.get();
+                m_baseplate.baseplateWidth = value.get();
             }
             value = tree.get_optional<int>("doc.baseplateHeight");
             if(value)
             {
-                m_baseplateHeight = value.get();
+                m_baseplate.baseplateHeight = value.get();
             }
 
         }
@@ -68,6 +79,11 @@ void Ministeck::AddImageFileLocal(const std::filesystem::path &imageFile)
 
         m_rgbImg = std::make_shared<cv::Mat>();
         cv::cvtColor(m_img, *m_rgbImg,cv::COLOR_BGR2RGB);
+
+        cv::cvtColor(m_img, m_labImg,cv::COLOR_BGR2Lab);
+        m_baseplate.imageWidth = m_rgbImg->cols;
+        m_baseplate.imageHeight = m_rgbImg->rows;
+        //imshow("test", m_labImg);
     }
 }
 
@@ -80,10 +96,10 @@ void Ministeck::SaveFile()
        if (!m_imageFileName.empty())
        {
            tree.put("doc.imagefile",m_imageFileName.c_str());
-           tree.put("doc.offsetX", m_imageOffsetX);
-           tree.put("doc.offsetY", m_imageOffsetY);
-           tree.put("doc.baseplateWidth", m_baseplateWidth);
-           tree.put("doc.baseplateHeight", m_baseplateHeight);
+           tree.put("doc.offsetX", m_baseplate.imageOffsetX);
+           tree.put("doc.offsetY", m_baseplate.imageOffsetY);
+           tree.put("doc.baseplateWidth", m_baseplate.baseplateWidth);
+           tree.put("doc.baseplateHeight", m_baseplate.baseplateHeight);
        }
        boost::property_tree::xml_writer_settings<std::string> settings(' ', 4);
        boost::property_tree::xml_parser::write_xml(m_path.c_str(), tree,
@@ -104,22 +120,45 @@ Ministeck::~Ministeck()
 
 std::pair<int ,int> Ministeck::GetBasePlateSize() const
 {
-    return {m_baseplateWidth,m_baseplateHeight};
+    return {m_baseplate.baseplateWidth,m_baseplate.baseplateHeight};
 }
 
 void Ministeck::SetBasePlateSize(int width,int height)
 {
-    m_baseplateWidth= width;
-    m_baseplateHeight = height;
+    m_baseplate.baseplateWidth= width;
+    m_baseplate.baseplateHeight = height;
 }
 
 std::pair<int,int> Ministeck::GetImageOffset() const
 {
-    return {m_imageOffsetX, m_imageOffsetY};
+    return {m_baseplate.imageOffsetX, m_baseplate.imageOffsetY};
 }
 
 void Ministeck::SetImageOffset(int left, int top)
 {
-    m_imageOffsetX = left;
-    m_imageOffsetY = top;
+    m_baseplate.imageOffsetX = left;
+    m_baseplate.imageOffsetY = top;
+}
+
+std::shared_ptr<cv::Mat> Ministeck::QuantizeImage()
+{
+    m_quantImg = m_quantize->QuantizeImage(m_labImg, m_baseplate, m_colorVec);
+    auto scaledImage = m_scaledOuputImage->ScaleImage(m_quantImg, m_baseplate, m_colorVec);
+    return scaledImage;
+}
+
+std::string Ministeck::GetStatus(int x,int y)
+{
+    std::string string;
+    if (!m_quantImg.empty())
+    {
+        x = std::min(x/m_baseplate.GetDecimation(), m_quantImg.cols-1);
+        y = std::min(y/m_baseplate.GetDecimation(), m_quantImg.rows-1);
+        auto index = m_quantImg.at<uint8_t>(y,x);
+        if (index < m_colorVec.size())
+        {
+            string = m_colorVec[index].naam + "(" + std::to_string(m_colorVec[index].colorNummer) + ")";
+        }
+    }
+    return string;
 }

@@ -2,6 +2,8 @@
 #include "Colors.h"
 #include "ColorConverter.h"
 #include "Ministeck.h"
+#include "Quantize.h"
+#include "ScaledOutputImage.h"
 
 LibMiniSteckBuilder::LibMiniSteckBuilder()
 {
@@ -22,8 +24,25 @@ std::unique_ptr<IColorConverter> LibMiniSteckBuilder::CreateIColorConverter()
 {
     return std::make_unique<ColorConverter>();
 }
-
 std::unique_ptr<IMinisteck> LibMiniSteckBuilder::CreateIMinisteck(const std::filesystem::path &path, std::function<void(const IMinisteck &,bool)> hasImageFile)
 {
-    return std::make_unique<Ministeck>(path, hasImageFile);
+    return CreateIMinisteckDependencyInjection(path,hasImageFile, CreateIColors(), CreateIQuantize(), CreateIScaledOutputImage());
+}
+
+std::unique_ptr<IMinisteck> LibMiniSteckBuilder::CreateIMinisteckDependencyInjection(const std::filesystem::path &path, std::function<void (const IMinisteck &, bool)> hasImageFile
+                                                                  , std::unique_ptr<IColors> colors
+                                                                  , std::unique_ptr<IQuantize> quantize
+                                                                  , std::unique_ptr<IScaledOutputImage> scaledOuputImage)
+{
+    return std::make_unique<Ministeck>(path, hasImageFile, std::move(colors), std::move(quantize), std::move(scaledOuputImage));
+}
+
+std::unique_ptr<IQuantize> LibMiniSteckBuilder::CreateIQuantize()
+{
+    return std::make_unique<Quantize>();
+}
+
+std::unique_ptr<IScaledOutputImage> LibMiniSteckBuilder::CreateIScaledOutputImage()
+{
+    return std::make_unique<ScaledOutputImage>();
 }

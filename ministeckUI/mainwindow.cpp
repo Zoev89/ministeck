@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->actionAddImageFile->setEnabled(false);
     ui->actionSettings->setEnabled(false);
+    ui->quantizedBitmap->installEventFilter(this);
+    ui->quantizedBitmap->setMouseTracking(true);
+
 }
 
 MainWindow::~MainWindow()
@@ -52,6 +55,7 @@ void MainWindow::CreateMinisteck(std::string path)
 
             }
         });
+        statusBar()->showMessage("Status");
     }
 }
 
@@ -93,5 +97,50 @@ void MainWindow::actionSettings()
     info = basePlate->RunDialog(info);
     m_ministeck->SetBasePlateSize(info.baseplateWidth, info.baseplateHeight);
     m_ministeck->SetImageOffset(info.imageOffsetX, info.imageOffsetY);
+}
 
+void MainWindow::actionQuantizeImage()
+{
+    m_quantizedImage = m_ministeck->QuantizeImage();
+    auto image = QImage((uchar*) m_quantizedImage->data, m_quantizedImage->cols, m_quantizedImage->rows, m_quantizedImage->step, QImage::Format_RGB888);
+
+    ui->quantizedBitmap->setOriginalPixmap(std::make_unique<QPixmap>(QPixmap::fromImage(image)));
+
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+{
+/*
+        if (event->type() == QEvent::MouseButtonPress) {
+            qDebug("Mouse has been pressed\n");
+            statusBar()->showMessage("Mousepress");
+        }
+*/
+    if (obj == ui->quantizedBitmap)
+    {
+        if (event->type() == QEvent::MouseButtonPress)
+        {
+            const QMouseEvent* const me = static_cast<const QMouseEvent*>( event );
+            //might want to check the buttons here
+            const QPoint p = me->pos(); //...or ->globalPos();
+
+            QString string(("MousePress "+ std::to_string(p.x()) + " "  + std::to_string(p.y()) + " " + std::to_string(ui->quantizedBitmap->width()) + "x" + std::to_string(ui->quantizedBitmap->height())).c_str());
+            if (m_quantizedImage)
+            {
+                double scaling = std::max(static_cast<double>(m_quantizedImage->cols) / ui->quantizedBitmap->width(),
+                                          static_cast<double>(m_quantizedImage->rows) / ui->quantizedBitmap->height());
+                int x=static_cast<int>(p.x()*scaling);
+                int y=static_cast<int>(p.y()*scaling);
+                string = m_ministeck->GetStatus(x,y).c_str();
+
+                //auto s = QString(" %1x%2 pos %3x%4").arg(m_quantizedImage->cols).arg(m_quantizedImage->rows).arg(x).arg(y);
+                //string = string + s;
+            }
+
+            statusBar()->showMessage(string);
+            return true;
+        }
+    }
+
+    return false;
 }

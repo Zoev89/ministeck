@@ -29,10 +29,10 @@ protected:
 
 };
 
-TEST_F (ColorsTest, UnitTest1)
+TEST_F (ColorsTest, AmountIfColors)
 {
     auto colors = m_colors->GetColors();
-    EXPECT_EQ(2, colors.size());
+    EXPECT_EQ(24, colors.size());
 }
 
 

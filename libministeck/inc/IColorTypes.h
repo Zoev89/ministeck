@@ -47,6 +47,9 @@ struct Lab
 
 struct Color
 {
+    Color()
+        : colorNummer(0)
+    {};
     int colorNummer;
     std::string naam;
     Rgb rgb;

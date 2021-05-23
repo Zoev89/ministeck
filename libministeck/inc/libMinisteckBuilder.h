@@ -7,6 +7,8 @@
 class IColors;
 class IMinisteck;
 class IColorConverter;
+class IQuantize;
+class IScaledOutputImage;
 
 class LibMiniSteckBuilder
 {
@@ -16,6 +18,13 @@ public:
     static std::unique_ptr<IColors> CreateIColorsDependencyInjection(std::unique_ptr<IColorConverter> colorConverter);
     static std::unique_ptr<IColorConverter> CreateIColorConverter();
     static std::unique_ptr<IMinisteck> CreateIMinisteck(const std::filesystem::path &path, std::function<void(const IMinisteck &, bool)> hasImageFile);
+    static std::unique_ptr<IMinisteck> CreateIMinisteckDependencyInjection(const std::filesystem::path &path, std::function<void(const IMinisteck &, bool)> hasImageFile
+                                                        , std::unique_ptr<IColors> colors
+                                                        , std::unique_ptr<IQuantize> quantize
+                                                        , std::unique_ptr<IScaledOutputImage> scaledOuputImage
+                                                        );
+    static std::unique_ptr<IQuantize> CreateIQuantize();
+    static std::unique_ptr<IScaledOutputImage> CreateIScaledOutputImage();
 };
 
 #endif // LIBMINISTECKBUILDER_H

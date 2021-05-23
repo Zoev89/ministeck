@@ -3,7 +3,9 @@
 #include "IMinisteck.h"
 #include "libMinisteckBuilder.h"
 #include "CImg.h"
-
+#include "test/IColorsMock.h"
+#include "test/IQuantizeMock.h"
+#include "test/IScaledOutputImageMock.h"
 #include <memory>
 #include <fstream>
 #include <iostream>
@@ -19,17 +21,25 @@ public:
    void SetUp( )
    {
        // code here will execute just before the test ensues
-       m_ministeck = LibMiniSteckBuilder::CreateIMinisteck("", [](const IMinisteck &, bool )
-       {
-       });
+
+       CreateLib("");
    }
 
    void CreateLib(const std::filesystem::path &path)
    {
-       m_ministeck = LibMiniSteckBuilder::CreateIMinisteck(path, [this](const IMinisteck &, bool value)
+       auto colors = std::make_unique<::testing::StrictMock<IColorsMock>>();
+       auto quantize = std::make_unique<::testing::StrictMock<IQuantizeMock>>();
+       auto scaledImage = std::make_unique<::testing::StrictMock<IScaledOutputImageMock>>();
+
+       m_colors = colors.get();
+       m_quantize = quantize.get();
+       m_scaledOutputImage = scaledImage.get();
+       EXPECT_CALL(*m_colors, GetColors()).WillRepeatedly(testing::Return(std::vector<Color>()));
+       m_hasImageFile = std::promise<bool>();
+       m_ministeck = LibMiniSteckBuilder::CreateIMinisteckDependencyInjection(path, [this](const IMinisteck &, bool value)
        {
            m_hasImageFile.set_value(value);
-       });
+       }, std::move(colors), std::move(quantize), std::move(scaledImage));
    }
    void CreateImageFile(const std::string &path)
    {
@@ -51,6 +61,9 @@ public:
 protected:
    std::unique_ptr<IMinisteck> m_ministeck;
    std::promise<bool> m_hasImageFile;
+   IColorsMock* m_colors;
+   IQuantizeMock* m_quantize;
+   IScaledOutputImageMock* m_scaledOutputImage;
 };
 
 TEST_F (MinisteckTest, CreateWithNewFile)
@@ -163,16 +176,16 @@ TEST_F (MinisteckTest, AddImageFile)
     std::getline(input, string);
     EXPECT_EQ("    <offsetY>0</offsetY>",string);
     std::getline(input, string);
-    EXPECT_EQ("    <baseplateWidth>0</baseplateWidth>",string);
+    EXPECT_EQ("    <baseplateWidth>32</baseplateWidth>",string);
     std::getline(input, string);
-    EXPECT_EQ("    <baseplateHeight>0</baseplateHeight>",string);
+    EXPECT_EQ("    <baseplateHeight>16</baseplateHeight>",string);
 }
 
 TEST_F(MinisteckTest, BaseplateSize)
 {
     auto [initWidth, initHeight] = m_ministeck->GetBasePlateSize();
-    EXPECT_EQ(0, initWidth);
-    EXPECT_EQ(0, initHeight);
+    EXPECT_EQ(32, initWidth);
+    EXPECT_EQ(16, initHeight);
 
     int width = 100;
     int height = 200;
@@ -194,4 +207,11 @@ TEST_F(MinisteckTest, ImageOffset)
     auto [retOffX, retOffY] = m_ministeck->GetImageOffset();
     EXPECT_EQ(offX, retOffX);
     EXPECT_EQ(offY, retOffY);
+}
+
+TEST_F(MinisteckTest, QuanizeImage)
+{
+    EXPECT_CALL(*m_quantize, QuantizeImage(testing::_, testing::_,testing::_)).WillOnce(testing::Return(cv::Mat()));
+    EXPECT_CALL(*m_scaledOutputImage, ScaleImage(testing::_, testing::_,testing::_)).WillOnce(testing::Return(std::make_shared<cv::Mat>()));
+    m_ministeck->QuantizeImage();
 }

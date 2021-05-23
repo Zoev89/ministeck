@@ -20,11 +20,15 @@ public slots:
     void actionNew();
     void actionAddImageFile();
     void actionSettings();
+    void actionQuantizeImage();
 private:
     void CreateMinisteck(std::string path);
+    virtual bool eventFilter(QObject *obj, QEvent *event);
     Ui::MainWindow *ui;
     std::unique_ptr<IMinisteck> m_ministeck;
     std::shared_ptr<cv::Mat> m_rgbImage;
+    std::shared_ptr<cv::Mat> m_ministeckImage;
+    std::shared_ptr<cv::Mat> m_quantizedImage;
     QImage m_image;
 };
 #endif // MAINWINDOW_H

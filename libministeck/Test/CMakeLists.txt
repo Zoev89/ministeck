@@ -4,10 +4,13 @@ find_package(OpenCV REQUIRED)
 #find_package(CImg REQUIRED)
 
 add_executable(libministecktest
+    BaseplateTest.cpp
     ColorConverterTest.cpp
     ColorsTest.cpp
     libministeckMain.cpp
     MinisteckTest.cpp
+    QuantizeTest.cpp
+    ScaledOutputImageTest.cpp
 )
 
 include_directories( ${GTEST_INCLUDE_DIRS})
