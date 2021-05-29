@@ -55,7 +55,7 @@ TEST_F (QuantizeTest, ConvertToBlackAndWhite)
     for(int y=0;y<baseplate.baseplateHeight;y++)
         for(int x=0;x<baseplate.baseplateWidth;x++)
         {
-            EXPECT_EQ((x<baseplate.baseplateWidth/2)? 0:1,retImg.at<uint8_t>(y,x)) << y<< " " <<x;
+            EXPECT_EQ((x<baseplate.baseplateWidth/2)? 0:1,retImg.at<cv::Vec2b>(y,x)[0]) << y<< " " <<x;
         }
 
     //cv::imshow("test", resizedImage);

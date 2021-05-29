@@ -10,6 +10,7 @@ class IScaledOutputImage
 public:
     virtual ~IScaledOutputImage() = default;
     virtual std::shared_ptr<cv::Mat> ScaleImage(const cv::Mat& quantizedImage, const IBaseplateType &baseplate, const std::vector<Color>& colorVec) const = 0;
+    virtual std::shared_ptr<cv::Mat> RenderImage(const cv::Mat& quantizedImage, const IBaseplateType &baseplate, const std::vector<Color>& colorVec) const = 0;
 protected:
     IScaledOutputImage() = default;
 };

@@ -4,6 +4,7 @@
 #include "Ministeck.h"
 #include "Quantize.h"
 #include "ScaledOutputImage.h"
+#include "RandVorm.h"
 
 LibMiniSteckBuilder::LibMiniSteckBuilder()
 {
@@ -45,4 +46,9 @@ std::unique_ptr<IQuantize> LibMiniSteckBuilder::CreateIQuantize()
 std::unique_ptr<IScaledOutputImage> LibMiniSteckBuilder::CreateIScaledOutputImage()
 {
     return std::make_unique<ScaledOutputImage>();
+}
+
+std::unique_ptr<IRandVorm> LibMiniSteckBuilder::CreateIRandVorm()
+{
+    return std::make_unique<RandVorm>();
 }

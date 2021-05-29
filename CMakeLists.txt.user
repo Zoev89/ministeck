@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.13.2, 2021-05-23T10:30:41. -->
+<!-- Written by QtCreator 4.13.2, 2021-05-28T21:48:23. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -83,6 +83,8 @@
     <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/MinisteckTest.cpp:QuanizeImage">Checked</value>
     <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/QuantizeTest.cpp:ConvertToBlackAndWhite">Checked</value>
     <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/QuantizeTest.cpp:QuantizeTest">Checked</value>
+    <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/RandVormTest.cpp:CheckDeRanden">Checked</value>
+    <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/RandVormTest.cpp:RandVormTest">Checked</value>
     <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/ScaledOutputImageTest.cpp:ScaledOutputImageTest">Checked</value>
     <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/ScaledOutputImageTest.cpp:emptyCreation">Checked</value>
    </valuemap>

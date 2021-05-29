@@ -21,6 +21,7 @@ public slots:
     void actionAddImageFile();
     void actionSettings();
     void actionQuantizeImage();
+    void actionCalcParts();
 private:
     void CreateMinisteck(std::string path);
     virtual bool eventFilter(QObject *obj, QEvent *event);

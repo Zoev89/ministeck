@@ -17,7 +17,8 @@ public:
     virtual std::pair<int,int> GetImageOffset() const = 0; // return leftCoordx,topCoordy
     virtual void SetImageOffset(int left, int top) = 0;
     virtual std::shared_ptr<cv::Mat> QuantizeImage() = 0;
-    virtual std::string GetStatus(int x,int y) = 0; // in coordinates of the quantized image.
+    virtual std::string GetStatus(int x,int y) = 0; // in baseplate coordinates.
+    virtual std::shared_ptr<cv::Mat> PartCalculation() = 0;
 protected:
     IMinisteck()= default;
 };

@@ -9,6 +9,7 @@ class IMinisteck;
 class IColorConverter;
 class IQuantize;
 class IScaledOutputImage;
+class IRandVorm;
 
 class LibMiniSteckBuilder
 {
@@ -25,6 +26,7 @@ public:
                                                         );
     static std::unique_ptr<IQuantize> CreateIQuantize();
     static std::unique_ptr<IScaledOutputImage> CreateIScaledOutputImage();
+    static std::unique_ptr<IRandVorm> CreateIRandVorm();
 };
 
 #endif // LIBMINISTECKBUILDER_H

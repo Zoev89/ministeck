@@ -152,13 +152,25 @@ std::string Ministeck::GetStatus(int x,int y)
     std::string string;
     if (!m_quantImg.empty())
     {
-        x = std::min(x/m_baseplate.GetDecimation(), m_quantImg.cols-1);
-        y = std::min(y/m_baseplate.GetDecimation(), m_quantImg.rows-1);
-        auto index = m_quantImg.at<uint8_t>(y,x);
+        x = std::min(x, m_quantImg.cols-1);
+        y = std::min(y, m_quantImg.rows-1);
+        auto index = m_quantImg.at<cv::Vec2b>(y,x)[0];
         if (index < m_colorVec.size())
         {
             string = m_colorVec[index].naam + "(" + std::to_string(m_colorVec[index].colorNummer) + ")";
         }
     }
     return string;
+}
+
+std::shared_ptr<cv::Mat> Ministeck::PartCalculation()
+{
+    IBaseplateType baseplate = m_baseplate;
+    baseplate.imageWidth = baseplate.baseplateWidth*8;
+    baseplate.imageHeight = baseplate.baseplateHeight*8;
+    baseplate.imageOffsetX = 0;
+    baseplate.imageOffsetY = 0;
+    auto scaledImage = m_scaledOuputImage->RenderImage(m_quantImg, baseplate, m_colorVec);
+    return scaledImage;
+
 }

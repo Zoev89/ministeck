@@ -32,6 +32,7 @@ public:
     virtual void SetImageOffset(int left, int top) override;
     virtual std::shared_ptr<cv::Mat> QuantizeImage() override;
     virtual std::string GetStatus(int x,int y) override;
+    virtual std::shared_ptr<cv::Mat> PartCalculation() override;
 
 
 private:

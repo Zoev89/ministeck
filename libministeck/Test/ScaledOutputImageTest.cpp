@@ -43,11 +43,11 @@ TEST_F (ScaledOutputImageTest, emptyCreation)
     baseplate.baseplateWidth = width/decimation;
     baseplate.baseplateHeight = height/decimation;
 
-    cv::Mat inputImage(baseplate.baseplateHeight, baseplate.baseplateWidth, CV_8UC1);
+    cv::Mat inputImage(baseplate.baseplateHeight, baseplate.baseplateWidth, CV_8UC2);
     for(int y=0;y<baseplate.baseplateHeight;y++)
         for(int x=0;x<baseplate.baseplateWidth;x++)
         {
-            inputImage.at<uint8_t>(y,x)=(x<baseplate.baseplateWidth/2) ? 0:1;
+            inputImage.at<cv::Vec2b>(y,x)[0]=(x<baseplate.baseplateWidth/2) ? 0:1;
         }
     auto retImg = m_scaledOutputImage->ScaleImage(inputImage, baseplate, colorVec);
 

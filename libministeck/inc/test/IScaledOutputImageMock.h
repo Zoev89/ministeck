@@ -8,4 +8,6 @@ class IScaledOutputImageMock: public IScaledOutputImage
 {
 public:
     MOCK_METHOD( std::shared_ptr<cv::Mat>, ScaleImage, (const cv::Mat& quantizedImage, const IBaseplateType &baseplate, const std::vector<Color>& colorVec), (const override));
+    MOCK_METHOD( std::shared_ptr<cv::Mat>, RenderImage, (const cv::Mat& quantizedImage, const IBaseplateType &baseplate, const std::vector<Color>& colorVec), (const override));
+
 };

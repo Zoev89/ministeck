@@ -13,7 +13,9 @@ add_library(libministeck
     libMinisteckBuilder.cpp inc/libMinisteckBuilder.h
     Quantize.cpp Quantize.h inc/IQuantize.h inc/test/IQuantizeMock.h
     ScaledOutputImage.cpp ScaledOutputImage.h inc/IScaledOutputImage.h inc/test/IScaledOutputImageMock.h
-)
+    RandVorm.cpp RandVorm.h inc/IRandVorm.h inc/test/IRandVormMock.h
+    inc/IMinisteckVormen.h
+    )
 
 add_subdirectory(Test)
 

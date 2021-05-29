@@ -105,7 +105,14 @@ void MainWindow::actionQuantizeImage()
     auto image = QImage((uchar*) m_quantizedImage->data, m_quantizedImage->cols, m_quantizedImage->rows, m_quantizedImage->step, QImage::Format_RGB888);
 
     ui->quantizedBitmap->setOriginalPixmap(std::make_unique<QPixmap>(QPixmap::fromImage(image)));
+}
 
+void MainWindow::actionCalcParts()
+{
+    m_quantizedImage = m_ministeck->PartCalculation();
+    auto image = QImage((uchar*) m_quantizedImage->data, m_quantizedImage->cols, m_quantizedImage->rows, m_quantizedImage->step, QImage::Format_RGB888);
+
+    ui->quantizedBitmap->setOriginalPixmap(std::make_unique<QPixmap>(QPixmap::fromImage(image)));
 }
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
@@ -127,8 +134,9 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
             QString string(("MousePress "+ std::to_string(p.x()) + " "  + std::to_string(p.y()) + " " + std::to_string(ui->quantizedBitmap->width()) + "x" + std::to_string(ui->quantizedBitmap->height())).c_str());
             if (m_quantizedImage)
             {
-                double scaling = std::max(static_cast<double>(m_quantizedImage->cols) / ui->quantizedBitmap->width(),
-                                          static_cast<double>(m_quantizedImage->rows) / ui->quantizedBitmap->height());
+                auto [width, height] = m_ministeck->GetBasePlateSize();
+                double scaling = std::max(static_cast<double>(width) / ui->quantizedBitmap->width(),
+                                          static_cast<double>(height) / ui->quantizedBitmap->height());
                 int x=static_cast<int>(p.x()*scaling);
                 int y=static_cast<int>(p.y()*scaling);
                 string = m_ministeck->GetStatus(x,y).c_str();
@@ -144,3 +152,4 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 
     return false;
 }
+

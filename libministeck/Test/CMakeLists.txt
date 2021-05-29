@@ -9,7 +9,9 @@ add_executable(libministecktest
     ColorsTest.cpp
     libministeckMain.cpp
     MinisteckTest.cpp
+    MinisteckVormenTest.cpp
     QuantizeTest.cpp
+    RandVormTest.cpp
     ScaledOutputImageTest.cpp
 )
 
