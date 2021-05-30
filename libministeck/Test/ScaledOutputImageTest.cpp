@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "IScaledOutputImage.h"
 #include "libMinisteckBuilder.h"
-
+#include "../RandVorm.h"  // just to be able to test this functon
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
@@ -48,6 +48,7 @@ TEST_F (ScaledOutputImageTest, emptyCreation)
         for(int x=0;x<baseplate.baseplateWidth;x++)
         {
             inputImage.at<cv::Vec2b>(y,x)[0]=(x<baseplate.baseplateWidth/2) ? 0:1;
+            inputImage.at<cv::Vec2b>(y,x)[1]=1;
         }
     auto retImg = m_scaledOutputImage->ScaleImage(inputImage, baseplate, colorVec);
 

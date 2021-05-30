@@ -13,7 +13,7 @@
 class IColors;
 class IQuantize;
 class IScaledOutputImage;
-
+class IRandVorm;
 
 class Ministeck : public IMinisteck
 {
@@ -22,6 +22,7 @@ public:
               , std::unique_ptr<IColors> colors
               , std::unique_ptr<IQuantize> quantize
               , std::unique_ptr<IScaledOutputImage> scaledOuputImage
+              , std::unique_ptr<IRandVorm> randvorm
               );
     ~Ministeck();
     virtual void AddImageFile(const std::filesystem::path &imageFile) override;
@@ -42,6 +43,7 @@ private:
     std::unique_ptr<IColors> m_colors;
     std::unique_ptr<IQuantize> m_quantize;
     std::unique_ptr<IScaledOutputImage> m_scaledOuputImage;
+    std::unique_ptr<IRandVorm> m_randvorm;
 
     std::filesystem::path m_path;
     std::filesystem::path m_imageFileName;

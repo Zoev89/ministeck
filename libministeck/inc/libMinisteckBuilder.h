@@ -10,6 +10,7 @@ class IColorConverter;
 class IQuantize;
 class IScaledOutputImage;
 class IRandVorm;
+class IMinisteckVormen;
 
 class LibMiniSteckBuilder
 {
@@ -23,10 +24,12 @@ public:
                                                         , std::unique_ptr<IColors> colors
                                                         , std::unique_ptr<IQuantize> quantize
                                                         , std::unique_ptr<IScaledOutputImage> scaledOuputImage
+                                                        , std::unique_ptr<IRandVorm> randvorm
                                                         );
     static std::unique_ptr<IQuantize> CreateIQuantize();
     static std::unique_ptr<IScaledOutputImage> CreateIScaledOutputImage();
     static std::unique_ptr<IRandVorm> CreateIRandVorm();
+    static std::unique_ptr<IMinisteckVormen> CreateIMinisteckVormen();
 };
 
 #endif // LIBMINISTECKBUILDER_H

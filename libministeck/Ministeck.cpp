@@ -7,19 +7,27 @@
 #include "IColors.h"
 #include "IQuantize.h"
 #include "IScaledOutputImage.h"
+#include "IRandVorm.h"
 
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 
+namespace
+{
+const int g_upscalingDecimation = 8;
+}
+
 Ministeck::Ministeck(const std::filesystem::path &path, std::function<void(const IMinisteck &,bool)> hasImageFile
                      , std::unique_ptr<IColors> colors
                      , std::unique_ptr<IQuantize> quantize
-                     , std::unique_ptr<IScaledOutputImage> scaledOuputImage)
+                     , std::unique_ptr<IScaledOutputImage> scaledOuputImage
+                     , std::unique_ptr<IRandVorm> randvorm)
     : m_colors(std::move(colors))
     , m_quantize(std::move(quantize))
     , m_scaledOuputImage(std::move(scaledOuputImage))
+    , m_randvorm(std::move(randvorm))
     , m_path(path)
     , m_hasImageFile(hasImageFile)
 {
@@ -166,11 +174,13 @@ std::string Ministeck::GetStatus(int x,int y)
 std::shared_ptr<cv::Mat> Ministeck::PartCalculation()
 {
     IBaseplateType baseplate = m_baseplate;
-    baseplate.imageWidth = baseplate.baseplateWidth*8;
-    baseplate.imageHeight = baseplate.baseplateHeight*8;
+    baseplate.imageWidth = baseplate.baseplateWidth*g_upscalingDecimation;
+    baseplate.imageHeight = baseplate.baseplateHeight*g_upscalingDecimation;
     baseplate.imageOffsetX = 0;
     baseplate.imageOffsetY = 0;
-    auto scaledImage = m_scaledOuputImage->RenderImage(m_quantImg, baseplate, m_colorVec);
+    auto randVormen = m_randvorm->GetRandVormen(g_upscalingDecimation);
+
+    auto scaledImage = m_scaledOuputImage->RenderImage(m_quantImg, baseplate, m_colorVec, randVormen);
     return scaledImage;
 
 }

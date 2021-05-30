@@ -41,7 +41,13 @@ Per kleur en per vorm de overall match bijhouden
 5 vormen
 Maar elke vorm heeft meerder orientaties dat zijn totaal
 10 orientaties
-Dus 24 * 10 = 240 orientatie kleur matches
+per pin word een 8x8 data array bijgehouden. Dat zijn
+1 + 2*2 + 2*3 + 4 + 4*3 = 27 8x8 arrays
+Dus 24 * 27 = 648 arrays
+Ik had ook een shape beschrijving los kunnen maken en dan had ik maar
+24 * 16 = 384 maar dan kan ik weer moeilijker de statistiek bijhouden
+zou eventueel de cv::Mat er alleen uit halen en die 384 keer neerleggen
+
 
 enkeltje
 (0,0) v1

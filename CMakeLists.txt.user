@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.13.2, 2021-05-28T21:48:23. -->
+<!-- Written by QtCreator 4.13.2, 2021-05-30T17:46:10. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -81,6 +81,12 @@
     <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/MinisteckTest.cpp:OpenFile">Checked</value>
     <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/MinisteckTest.cpp:OpenWithJpgFile">Checked</value>
     <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/MinisteckTest.cpp:QuanizeImage">Checked</value>
+    <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/MinisteckVormenTest.cpp:CalcParts">Checked</value>
+    <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/MinisteckVormenTest.cpp:CheckMachListEmpty">Checked</value>
+    <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/MinisteckVormenTest.cpp:CreatMatchTable">Checked</value>
+    <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/MinisteckVormenTest.cpp:FoutInRandVorm">Checked</value>
+    <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/MinisteckVormenTest.cpp:GTestPrintVorm">Checked</value>
+    <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/MinisteckVormenTest.cpp:MinisteckVormenTest">Checked</value>
     <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/QuantizeTest.cpp:ConvertToBlackAndWhite">Checked</value>
     <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/QuantizeTest.cpp:QuantizeTest">Checked</value>
     <value type="Qt::CheckState" key="/home/eric/ministeck/libministeck/Test/RandVormTest.cpp:CheckDeRanden">Checked</value>

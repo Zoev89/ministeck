@@ -5,6 +5,7 @@
 #include "Quantize.h"
 #include "ScaledOutputImage.h"
 #include "RandVorm.h"
+#include "MinisteckVormen.h"
 
 LibMiniSteckBuilder::LibMiniSteckBuilder()
 {
@@ -27,15 +28,20 @@ std::unique_ptr<IColorConverter> LibMiniSteckBuilder::CreateIColorConverter()
 }
 std::unique_ptr<IMinisteck> LibMiniSteckBuilder::CreateIMinisteck(const std::filesystem::path &path, std::function<void(const IMinisteck &,bool)> hasImageFile)
 {
-    return CreateIMinisteckDependencyInjection(path,hasImageFile, CreateIColors(), CreateIQuantize(), CreateIScaledOutputImage());
+    return CreateIMinisteckDependencyInjection(path,hasImageFile, CreateIColors(), CreateIQuantize()
+                                               , CreateIScaledOutputImage()
+                                               , CreateIRandVorm()
+                                               );
 }
 
 std::unique_ptr<IMinisteck> LibMiniSteckBuilder::CreateIMinisteckDependencyInjection(const std::filesystem::path &path, std::function<void (const IMinisteck &, bool)> hasImageFile
                                                                   , std::unique_ptr<IColors> colors
                                                                   , std::unique_ptr<IQuantize> quantize
-                                                                  , std::unique_ptr<IScaledOutputImage> scaledOuputImage)
+                                                                  , std::unique_ptr<IScaledOutputImage> scaledOuputImage
+                                                                  , std::unique_ptr<IRandVorm> randvorm
+                                                                  )
 {
-    return std::make_unique<Ministeck>(path, hasImageFile, std::move(colors), std::move(quantize), std::move(scaledOuputImage));
+    return std::make_unique<Ministeck>(path, hasImageFile, std::move(colors), std::move(quantize), std::move(scaledOuputImage), std::move(randvorm));
 }
 
 std::unique_ptr<IQuantize> LibMiniSteckBuilder::CreateIQuantize()
@@ -51,4 +57,9 @@ std::unique_ptr<IScaledOutputImage> LibMiniSteckBuilder::CreateIScaledOutputImag
 std::unique_ptr<IRandVorm> LibMiniSteckBuilder::CreateIRandVorm()
 {
     return std::make_unique<RandVorm>();
+}
+
+std::unique_ptr<IMinisteckVormen> LibMiniSteckBuilder::CreateIMinisteckVormen()
+{
+    return std::make_unique<MinisteckVormen>();
 }

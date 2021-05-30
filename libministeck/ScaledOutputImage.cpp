@@ -35,27 +35,21 @@ std::shared_ptr<cv::Mat> ScaledOutputImage::ScaleImage(const cv::Mat& quantizedI
     return resizedImage;
 }
 
-std::shared_ptr<cv::Mat> ScaledOutputImage::RenderImage(const cv::Mat &quantizedImage, const IBaseplateType &baseplate, const std::vector<Color> &colorVec) const
+std::shared_ptr<cv::Mat> ScaledOutputImage::RenderImage(const cv::Mat &quantizedImage, const IBaseplateType &baseplate, const std::vector<Color> &colorVec, const std::vector<cv::Mat>& randVormen) const
 {
     int decimation = baseplate.GetDecimation();
     cv::Mat colormap(256, 1, CV_8UC3,cv::Vec3b(0,128,128));
     cv::Mat outputImage(quantizedImage.rows * decimation, quantizedImage.cols * decimation, CV_8UC1);
-    cv::Mat mask(decimation, decimation, CV_8UC1);
-    //tijdelijk genereer even een enkeltje
-    for (int y=0;y<decimation;y++)
-        for (int x=0;x<decimation;x++)
-        {
-            mask.at<uint8_t>(x,y) = ((x==0) || (y==0) || (x==decimation-1) || (y==decimation-1)) ? 1:0;
-        }
     // voor de rand pixels vervang de index door index+colorVec.size()
     for(int y=0;y<quantizedImage.rows; y++)
         for(int x=0;x<quantizedImage.cols;x++)
         {
             uint8_t index = quantizedImage.at<cv::Vec2b>(y,x)[0];
+            uint8_t randVormIndex = quantizedImage.at<cv::Vec2b>(y,x)[1];
             for(int decy=0; decy<decimation;decy++)
                 for(int decx=0;decx<decimation;decx++)
                 {
-                    outputImage.at<uint8_t>(y*decimation+decy,x*decimation+decx) = (mask.at<uint8_t>(decx,decy) == 1) ? index+colorVec.size(): index;
+                    outputImage.at<uint8_t>(y*decimation+decy,x*decimation+decx) = (randVormen[randVormIndex].at<uint8_t>(decy,decx) == 1) ? index+colorVec.size(): index;
                 }
         }
 
