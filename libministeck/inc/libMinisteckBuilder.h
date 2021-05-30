@@ -25,6 +25,7 @@ public:
                                                         , std::unique_ptr<IQuantize> quantize
                                                         , std::unique_ptr<IScaledOutputImage> scaledOuputImage
                                                         , std::unique_ptr<IRandVorm> randvorm
+                                                        , std::unique_ptr<IMinisteckVormen> ministeckVormen
                                                         );
     static std::unique_ptr<IQuantize> CreateIQuantize();
     static std::unique_ptr<IScaledOutputImage> CreateIScaledOutputImage();

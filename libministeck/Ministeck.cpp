@@ -8,6 +8,7 @@
 #include "IQuantize.h"
 #include "IScaledOutputImage.h"
 #include "IRandVorm.h"
+#include "IMinisteckVormen.h"
 
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
@@ -23,11 +24,14 @@ Ministeck::Ministeck(const std::filesystem::path &path, std::function<void(const
                      , std::unique_ptr<IColors> colors
                      , std::unique_ptr<IQuantize> quantize
                      , std::unique_ptr<IScaledOutputImage> scaledOuputImage
-                     , std::unique_ptr<IRandVorm> randvorm)
+                     , std::unique_ptr<IRandVorm> randvorm
+                     , std::unique_ptr<IMinisteckVormen> ministeckVormen
+                     )
     : m_colors(std::move(colors))
     , m_quantize(std::move(quantize))
     , m_scaledOuputImage(std::move(scaledOuputImage))
     , m_randvorm(std::move(randvorm))
+    , m_ministeckVormen(std::move(ministeckVormen))
     , m_path(path)
     , m_hasImageFile(hasImageFile)
 {
@@ -179,7 +183,8 @@ std::shared_ptr<cv::Mat> Ministeck::PartCalculation()
     baseplate.imageOffsetX = 0;
     baseplate.imageOffsetY = 0;
     auto randVormen = m_randvorm->GetRandVormen(g_upscalingDecimation);
-
+    m_ministeckVormen->CreateMatchTable(m_colorVec,randVormen);
+    m_ministeckVormen->CalcParts(m_labImg, m_quantImg, m_baseplate,randVormen);
     auto scaledImage = m_scaledOuputImage->RenderImage(m_quantImg, baseplate, m_colorVec, randVormen);
     return scaledImage;
 

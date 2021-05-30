@@ -7,6 +7,7 @@
 #include "test/IQuantizeMock.h"
 #include "test/IScaledOutputImageMock.h"
 #include "test/IRandVormMock.h"
+#include "test/IMinisteckVormenMock.h"
 #include <memory>
 #include <fstream>
 #include <iostream>
@@ -32,17 +33,19 @@ public:
        auto quantize = std::make_unique<::testing::StrictMock<IQuantizeMock>>();
        auto scaledImage = std::make_unique<::testing::StrictMock<IScaledOutputImageMock>>();
        auto randVorm = std::make_unique<::testing::StrictMock<IRandVormMock>>();
+       auto ministeckVormen = std::make_unique<::testing::StrictMock<IMinisteckVormenMock>>();
 
        m_colors = colors.get();
        m_quantize = quantize.get();
        m_scaledOutputImage = scaledImage.get();
        m_randVorm = randVorm.get();
+       m_ministeckVormen = ministeckVormen.get();
        EXPECT_CALL(*m_colors, GetColors()).WillRepeatedly(testing::Return(std::vector<Color>()));
        m_hasImageFile = std::promise<bool>();
        m_ministeck = LibMiniSteckBuilder::CreateIMinisteckDependencyInjection(path, [this](const IMinisteck &, bool value)
        {
            m_hasImageFile.set_value(value);
-       }, std::move(colors), std::move(quantize), std::move(scaledImage), std::move(randVorm));
+       }, std::move(colors), std::move(quantize), std::move(scaledImage), std::move(randVorm), std::move(ministeckVormen));
    }
    void CreateImageFile(const std::string &path)
    {
@@ -68,6 +71,7 @@ protected:
    IQuantizeMock* m_quantize;
    IScaledOutputImageMock* m_scaledOutputImage;
    IRandVormMock* m_randVorm;
+   IMinisteckVormenMock* m_ministeckVormen;
 };
 
 TEST_F (MinisteckTest, CreateWithNewFile)

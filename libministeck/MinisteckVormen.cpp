@@ -126,7 +126,7 @@ MinisteckMatch MinisteckVormen::FillMatch(int offsetY, int offsetX, int randVorm
 
 
 void MinisteckVormen::CalcParts(const cv::Mat& inputImage, cv::Mat& quantizedImage, const IBaseplateType &baseplate,
-                       const std::vector<Color>& colorVec, const std::vector<cv::Mat>& randVormen)
+                                const std::vector<cv::Mat>& randVormen)
 {
     int decimation = randVormen[0].rows;
 

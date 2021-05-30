@@ -202,7 +202,7 @@ TEST_F(MinisteckVormenTest, CalcParts)
     auto randVorm = LibMiniSteckBuilder::CreateIRandVorm();
     auto randVormen = randVorm->GetRandVormen(decimation);
     m_ministeckVormen->CreateMatchTable(colorVec,randVormen);
-    m_ministeckVormen->CalcParts(inputImage,quantImage,baseplate,colorVec,randVormen);
+    m_ministeckVormen->CalcParts(inputImage,quantImage,baseplate,randVormen);
     std::cout << quantImage << std::endl;
 
 }

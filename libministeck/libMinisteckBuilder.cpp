@@ -31,17 +31,20 @@ std::unique_ptr<IMinisteck> LibMiniSteckBuilder::CreateIMinisteck(const std::fil
     return CreateIMinisteckDependencyInjection(path,hasImageFile, CreateIColors(), CreateIQuantize()
                                                , CreateIScaledOutputImage()
                                                , CreateIRandVorm()
-                                               );
+                                               , CreateIMinisteckVormen());
 }
+
 
 std::unique_ptr<IMinisteck> LibMiniSteckBuilder::CreateIMinisteckDependencyInjection(const std::filesystem::path &path, std::function<void (const IMinisteck &, bool)> hasImageFile
                                                                   , std::unique_ptr<IColors> colors
                                                                   , std::unique_ptr<IQuantize> quantize
                                                                   , std::unique_ptr<IScaledOutputImage> scaledOuputImage
                                                                   , std::unique_ptr<IRandVorm> randvorm
+                                                                  , std::unique_ptr<IMinisteckVormen> ministeckVormen
                                                                   )
 {
-    return std::make_unique<Ministeck>(path, hasImageFile, std::move(colors), std::move(quantize), std::move(scaledOuputImage), std::move(randvorm));
+    return std::make_unique<Ministeck>(path, hasImageFile, std::move(colors), std::move(quantize), std::move(scaledOuputImage), std::move(randvorm),
+            std::move(ministeckVormen));
 }
 
 std::unique_ptr<IQuantize> LibMiniSteckBuilder::CreateIQuantize()

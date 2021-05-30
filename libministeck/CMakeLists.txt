@@ -14,8 +14,8 @@ add_library(libministeck
     Quantize.cpp Quantize.h inc/IQuantize.h inc/test/IQuantizeMock.h
     ScaledOutputImage.cpp ScaledOutputImage.h inc/IScaledOutputImage.h inc/test/IScaledOutputImageMock.h
     RandVorm.cpp RandVorm.h inc/IRandVorm.h inc/test/IRandVormMock.h
-    MinisteckVormen.cpp MinisteckVormen.h inc/IMinisteckVormen.h
-    )
+    MinisteckVormen.cpp MinisteckVormen.h inc/IMinisteckVormen.h inc/test/IMinisteckVormenMock.h
+)
 
 add_subdirectory(Test)
 

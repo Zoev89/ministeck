@@ -94,7 +94,7 @@ public:
     virtual void CreateMatchTable(const std::vector<Color> &colors, const std::vector<cv::Mat>& randVormen) = 0;
     virtual std::vector<MinisteckKleur> GetMatchTable() const = 0;
     virtual void CalcParts(const cv::Mat& inputImage, cv::Mat& quantizedImage, const IBaseplateType &baseplate,
-                           const std::vector<Color>& colorVec, const std::vector<cv::Mat>& randVormen) = 0;
+                           const std::vector<cv::Mat>& randVormen) = 0;
 protected:
     IMinisteckVormen() = default;
 };
