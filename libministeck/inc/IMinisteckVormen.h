@@ -68,12 +68,14 @@ struct MinisteckVorm
 {
     Vorm vorm = Vorm::Enkeltje;
     std::vector<MinisteckMatch> eenEnkeleOrientatie;
+    std::vector<cv::Point> enkeltjesReductie;
     double accumulatedError = 0;
     int    aantalTests = 0;
     bool operator==(const MinisteckVorm &lhs) const
     {
         return ((vorm == lhs.vorm)
              && (eenEnkeleOrientatie == lhs.eenEnkeleOrientatie)
+             && (enkeltjesReductie == lhs.enkeltjesReductie)
              && (accumulatedError == lhs.accumulatedError)
              && (aantalTests == lhs.aantalTests));
     };
@@ -84,7 +86,9 @@ struct MinisteckKleur
     Color color;
     std::vector<MinisteckVorm> matchVormen;
     std::map<Vorm, double> bestMatchError;
-    std::map<Vorm, int> stukjesPerVorm;;
+    std::map<Vorm, int> stukjesPerVorm;
+    std::map<Vorm, double> penaltyPerVorm;
+    double totaalAantalStukjes = 0;
 };
 
 class IMinisteckVormen

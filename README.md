@@ -30,11 +30,13 @@ string
 
 
 per strip
-enkeltje  2
-tweeje   16
-drietje  12
-vierkant  8
-hoekje    4
+totaal 42 vromen
+          aantal	kans
+enkeltje  2		1/21
+tweeje   16             8/21
+drietje  12		6/21
+vierkant  8		4/21
+hoekje    4		2/21
 
 Per kleur en per vorm de overall match bijhouden
 24 kleuren
@@ -153,9 +155,20 @@ v0    v1    v2    v3    v4    v5    v6    v7    v8    v9    v10   v11   v12   v1
  tweetje  (0,0) vx (1,0) vx
  tweetje  (0,0) vx (0,1) vx
  
- x=currentform .=empty c=othercolor or border
+ x=currentform .=empty c=othercolor or border or al belegt maakt niet uit welke kleur
+
+    c
+   c.c 
+  c.x.c
+   c.c
+    c
+    
  xx.c
    c
+ 
+ xx
+ c.c
+  c
    
  x.c
  xc
@@ -164,9 +177,18 @@ v0    v1    v2    v3    v4    v5    v6    v7    v8    v9    v10   v11   v12   v1
  x.c
   c
   
+  x
+c.x
+ c
+
+  x
+  x
+ c.c
+  c
   
- xxx.c
-    c
+ xxx
+ c.c
+  c
     
  x.c
  xc
@@ -183,10 +205,17 @@ v0    v1    v2    v3    v4    v5    v6    v7    v8    v9    v10   v11   v12   v1
   
  xx.c
  x c
- xx.
+ 
+ xx
+ x.c
+  c
+  
+ xx
  c.c
   c
  
- ...c
- c.c
-                                        
+ 
+  xx.c
+  c.c
+   c
+   

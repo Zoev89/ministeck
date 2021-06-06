@@ -82,6 +82,9 @@ TEST_F(MinisteckVormenTest, CreatMatchTable)
     EXPECT_EQ(Vorm::Enkeltje, matchTable[0].matchVormen[0].vorm);
     ASSERT_EQ(1, matchTable[0].matchVormen[0].eenEnkeleOrientatie.size());
     CheckMatch(matchTable[0].matchVormen[0].eenEnkeleOrientatie[0], 0, 0, 1, __LINE__);
+    ASSERT_EQ(2, matchTable[0].matchVormen[0].enkeltjesReductie.size());
+    EXPECT_EQ(cv::Point(1,0), matchTable[0].matchVormen[0].enkeltjesReductie[0]);
+    EXPECT_EQ(cv::Point(0,1), matchTable[0].matchVormen[0].enkeltjesReductie[1]);
     std::array<uint8_t, 3*9> inp =
     {
         110,128,128 , 110,128,128 , 110,128,128,
@@ -96,6 +99,9 @@ TEST_F(MinisteckVormenTest, CreatMatchTable)
     EXPECT_EQ(Vorm::Enkeltje, matchTable[1].matchVormen[0].vorm);
     ASSERT_EQ(1,matchTable[1].matchVormen[0].eenEnkeleOrientatie.size());
     CheckMatch(matchTable[1].matchVormen[0].eenEnkeleOrientatie[0], 0, 0, 1, __LINE__);
+    ASSERT_EQ(2, matchTable[1].matchVormen[0].enkeltjesReductie.size());
+    EXPECT_EQ(cv::Point(1,0), matchTable[1].matchVormen[0].enkeltjesReductie[0]);
+    EXPECT_EQ(cv::Point(0,1), matchTable[1].matchVormen[0].enkeltjesReductie[1]);
     inp =
     {
         180,128,128 , 180,128,128 , 180,128,128,
@@ -110,12 +116,21 @@ TEST_F(MinisteckVormenTest, CreatMatchTable)
     ASSERT_EQ(2,matchTable[0].matchVormen[1].eenEnkeleOrientatie.size());
     CheckMatch(matchTable[0].matchVormen[1].eenEnkeleOrientatie[0], 0, 0, 2, __LINE__);
     CheckMatch(matchTable[0].matchVormen[1].eenEnkeleOrientatie[1], 0, 1, 3, __LINE__);
+    ASSERT_EQ(3, matchTable[1].matchVormen[1].enkeltjesReductie.size());
+    EXPECT_EQ(cv::Point(2,0), matchTable[0].matchVormen[1].enkeltjesReductie[0]);
+    EXPECT_EQ(cv::Point(0,1), matchTable[0].matchVormen[1].enkeltjesReductie[1]);
+    EXPECT_EQ(cv::Point(1,1), matchTable[0].matchVormen[1].enkeltjesReductie[2]);
 
     // tweetje verticaal
     EXPECT_EQ(Vorm::Tweetje, matchTable[0].matchVormen[2].vorm);
     ASSERT_EQ(2,matchTable[0].matchVormen[2].eenEnkeleOrientatie.size());
     CheckMatch(matchTable[0].matchVormen[2].eenEnkeleOrientatie[0], 0, 0, 4, __LINE__);
     CheckMatch(matchTable[0].matchVormen[2].eenEnkeleOrientatie[1], 1, 0, 5, __LINE__);
+    ASSERT_EQ(4, matchTable[1].matchVormen[2].enkeltjesReductie.size());
+    EXPECT_EQ(cv::Point(1,0), matchTable[0].matchVormen[2].enkeltjesReductie[0]);
+    EXPECT_EQ(cv::Point(-1,1), matchTable[0].matchVormen[2].enkeltjesReductie[1]);
+    EXPECT_EQ(cv::Point(1,1), matchTable[0].matchVormen[2].enkeltjesReductie[2]);
+    EXPECT_EQ(cv::Point(0,2), matchTable[0].matchVormen[2].enkeltjesReductie[3]);
 
     // drietje horizontaal
     EXPECT_EQ(Vorm::Drietje, matchTable[0].matchVormen[3].vorm);
@@ -123,6 +138,11 @@ TEST_F(MinisteckVormenTest, CreatMatchTable)
     CheckMatch(matchTable[0].matchVormen[3].eenEnkeleOrientatie[0], 0, 0, 2, __LINE__);
     CheckMatch(matchTable[0].matchVormen[3].eenEnkeleOrientatie[1], 0, 1, 6, __LINE__);
     CheckMatch(matchTable[0].matchVormen[3].eenEnkeleOrientatie[2], 0, 2, 3, __LINE__);
+    ASSERT_EQ(4, matchTable[1].matchVormen[3].enkeltjesReductie.size());
+    EXPECT_EQ(cv::Point(3,0), matchTable[0].matchVormen[3].enkeltjesReductie[0]);
+    EXPECT_EQ(cv::Point(0,1), matchTable[0].matchVormen[3].enkeltjesReductie[1]);
+    EXPECT_EQ(cv::Point(1,1), matchTable[0].matchVormen[3].enkeltjesReductie[2]);
+    EXPECT_EQ(cv::Point(2,1), matchTable[0].matchVormen[3].enkeltjesReductie[3]);
 
     // drietje verticaal
     EXPECT_EQ(Vorm::Drietje, matchTable[0].matchVormen[4].vorm);
@@ -130,6 +150,13 @@ TEST_F(MinisteckVormenTest, CreatMatchTable)
     CheckMatch(matchTable[0].matchVormen[4].eenEnkeleOrientatie[0], 0, 0, 4, __LINE__);
     CheckMatch(matchTable[0].matchVormen[4].eenEnkeleOrientatie[1], 1, 0, 7, __LINE__);
     CheckMatch(matchTable[0].matchVormen[4].eenEnkeleOrientatie[2], 2, 0, 5, __LINE__);
+    ASSERT_EQ(6, matchTable[1].matchVormen[4].enkeltjesReductie.size());
+    EXPECT_EQ(cv::Point(1,0), matchTable[0].matchVormen[4].enkeltjesReductie[0]);
+    EXPECT_EQ(cv::Point(-1,1), matchTable[0].matchVormen[4].enkeltjesReductie[1]);
+    EXPECT_EQ(cv::Point(1,1), matchTable[0].matchVormen[4].enkeltjesReductie[2]);
+    EXPECT_EQ(cv::Point(-1,2), matchTable[0].matchVormen[4].enkeltjesReductie[3]);
+    EXPECT_EQ(cv::Point(1,2), matchTable[0].matchVormen[4].enkeltjesReductie[4]);
+    EXPECT_EQ(cv::Point(0,3), matchTable[0].matchVormen[4].enkeltjesReductie[5]);
 
     // viertje
     EXPECT_EQ(Vorm::Vierkant, matchTable[0].matchVormen[5].vorm);
@@ -138,6 +165,12 @@ TEST_F(MinisteckVormenTest, CreatMatchTable)
     CheckMatch(matchTable[0].matchVormen[5].eenEnkeleOrientatie[1], 0, 1,  9, __LINE__);
     CheckMatch(matchTable[0].matchVormen[5].eenEnkeleOrientatie[2], 1, 0, 10, __LINE__);
     CheckMatch(matchTable[0].matchVormen[5].eenEnkeleOrientatie[3], 1, 1, 11, __LINE__);
+    ASSERT_EQ(5, matchTable[1].matchVormen[5].enkeltjesReductie.size());
+    EXPECT_EQ(cv::Point(2,0), matchTable[0].matchVormen[5].enkeltjesReductie[0]);
+    EXPECT_EQ(cv::Point(-1,1), matchTable[0].matchVormen[5].enkeltjesReductie[1]);
+    EXPECT_EQ(cv::Point(2,1), matchTable[0].matchVormen[5].enkeltjesReductie[2]);
+    EXPECT_EQ(cv::Point(0,2), matchTable[0].matchVormen[5].enkeltjesReductie[3]);
+    EXPECT_EQ(cv::Point(1,2), matchTable[0].matchVormen[5].enkeltjesReductie[4]);
 
     // hoekje
     EXPECT_EQ(Vorm::Hoekje, matchTable[0].matchVormen[6].vorm);
@@ -145,24 +178,46 @@ TEST_F(MinisteckVormenTest, CreatMatchTable)
     CheckMatch(matchTable[0].matchVormen[6].eenEnkeleOrientatie[0], 0, 0,  4, __LINE__);
     CheckMatch(matchTable[0].matchVormen[6].eenEnkeleOrientatie[1], 1, 0, 12, __LINE__);
     CheckMatch(matchTable[0].matchVormen[6].eenEnkeleOrientatie[2], 1, 1,  3, __LINE__);
+    ASSERT_EQ(5, matchTable[1].matchVormen[6].enkeltjesReductie.size());
+    EXPECT_EQ(cv::Point(1,0), matchTable[0].matchVormen[6].enkeltjesReductie[0]);
+    EXPECT_EQ(cv::Point(-1,1), matchTable[0].matchVormen[6].enkeltjesReductie[1]);
+    EXPECT_EQ(cv::Point(2,1), matchTable[0].matchVormen[6].enkeltjesReductie[2]);
+    EXPECT_EQ(cv::Point(0,2), matchTable[0].matchVormen[6].enkeltjesReductie[3]);
+    EXPECT_EQ(cv::Point(1,2), matchTable[0].matchVormen[6].enkeltjesReductie[4]);
 
     EXPECT_EQ(Vorm::Hoekje, matchTable[0].matchVormen[7].vorm);
     ASSERT_EQ(3,matchTable[0].matchVormen[7].eenEnkeleOrientatie.size());
     CheckMatch(matchTable[0].matchVormen[7].eenEnkeleOrientatie[0], 0, 0, 13, __LINE__);
     CheckMatch(matchTable[0].matchVormen[7].eenEnkeleOrientatie[1], 0, 1,  3, __LINE__);
     CheckMatch(matchTable[0].matchVormen[7].eenEnkeleOrientatie[2], 1, 0,  5, __LINE__);
+    ASSERT_EQ(4, matchTable[1].matchVormen[7].enkeltjesReductie.size());
+    EXPECT_EQ(cv::Point(2,0), matchTable[0].matchVormen[7].enkeltjesReductie[0]);
+    EXPECT_EQ(cv::Point(-1,1), matchTable[0].matchVormen[7].enkeltjesReductie[1]);
+    EXPECT_EQ(cv::Point(1,1), matchTable[0].matchVormen[7].enkeltjesReductie[2]);
+    EXPECT_EQ(cv::Point(0,2), matchTable[0].matchVormen[7].enkeltjesReductie[3]);
 
     EXPECT_EQ(Vorm::Hoekje, matchTable[0].matchVormen[8].vorm);
     ASSERT_EQ(3,matchTable[0].matchVormen[8].eenEnkeleOrientatie.size());
     CheckMatch(matchTable[0].matchVormen[8].eenEnkeleOrientatie[0], 0, 0,  2, __LINE__);
     CheckMatch(matchTable[0].matchVormen[8].eenEnkeleOrientatie[1], 0, 1, 14, __LINE__);
     CheckMatch(matchTable[0].matchVormen[8].eenEnkeleOrientatie[2], 1, 1,  5, __LINE__);
+    ASSERT_EQ(4, matchTable[1].matchVormen[8].enkeltjesReductie.size());
+    EXPECT_EQ(cv::Point(2,0), matchTable[0].matchVormen[8].enkeltjesReductie[0]);
+    EXPECT_EQ(cv::Point(0,1), matchTable[0].matchVormen[8].enkeltjesReductie[1]);
+    EXPECT_EQ(cv::Point(2,1), matchTable[0].matchVormen[8].enkeltjesReductie[2]);
+    EXPECT_EQ(cv::Point(1,2), matchTable[0].matchVormen[8].enkeltjesReductie[3]);
 
     EXPECT_EQ(Vorm::Hoekje, matchTable[0].matchVormen[9].vorm);
     ASSERT_EQ(3,matchTable[0].matchVormen[9].eenEnkeleOrientatie.size());
     CheckMatch(matchTable[0].matchVormen[9].eenEnkeleOrientatie[0], 0, 0,  4, __LINE__);
     CheckMatch(matchTable[0].matchVormen[9].eenEnkeleOrientatie[1], 1, 0, 15, __LINE__);
     CheckMatch(matchTable[0].matchVormen[9].eenEnkeleOrientatie[2], 1,-1,  2, __LINE__);
+    ASSERT_EQ(5, matchTable[1].matchVormen[9].enkeltjesReductie.size());
+    EXPECT_EQ(cv::Point(1,0), matchTable[0].matchVormen[9].enkeltjesReductie[0]);
+    EXPECT_EQ(cv::Point(-2,1), matchTable[0].matchVormen[9].enkeltjesReductie[1]);
+    EXPECT_EQ(cv::Point(1,1), matchTable[0].matchVormen[9].enkeltjesReductie[2]);
+    EXPECT_EQ(cv::Point(-1,2), matchTable[0].matchVormen[9].enkeltjesReductie[3]);
+    EXPECT_EQ(cv::Point(0,2), matchTable[0].matchVormen[9].enkeltjesReductie[4]);
 
 }
 
@@ -203,6 +258,18 @@ TEST_F(MinisteckVormenTest, CalcParts)
     auto randVormen = randVorm->GetRandVormen(decimation);
     m_ministeckVormen->CreateMatchTable(colorVec,randVormen);
     m_ministeckVormen->CalcParts(inputImage,quantImage,baseplate,randVormen);
+    std::array<uint8_t,7*15*2> refData =
+    {
+        0,   8,   0,   9,   0,   8,   0,   9,   0,   8,   0,   9,   0,   4,   1,   2,   1,   6,   1,   3,   1,   8,   1,   9,   1,   8,   1,   9,   1,   4,
+        0,  10,   0,  11,   0,  10,   0,  11,   0,  10,   0,  11,   0,   7,   1,   2,   1,   6,   1,   3,   1,  10,   1,  11,   1,  10,   1,  11,   1,   7,
+        0,   8,   0,   9,   0,   8,   0,   9,   0,   8,   0,   9,   0,   5,   1,   2,   1,   6,   1,   3,   1,   8,   1,   9,   1,   8,   1,   9,   1,   5,
+        0,  10,   0,  11,   0,  10,   0,  11,   0,  10,   0,  11,   0,   4,   1,   2,   1,   6,   1,   3,   1,  10,   1,  11,   1,  10,   1,  11,   1,   4,
+        0,   8,   0,   9,   0,   8,   0,   9,   0,   8,   0,   9,   0,   7,   1,   2,   1,   6,   1,   3,   1,   8,   1,   9,   1,   8,   1,   9,   1,   7,
+        0,  10,   0,  11,   0,  10,   0,  11,   0,  10,   0,  11,   0,   5,   1,   2,   1,   6,   1,   3,   1,  10,   1,  11,   1,  10,   1,  11,   1,   5,
+        0,   2,   0,   6,   0,   3,   0,   2,   0,   3,   0,   2,   0,   3,   1,   2,   1,   6,   1,   3,   1,   2,   1,   6,   1,   3,   1,   2,   1,   3
+    };
+    cv::Mat refImag(baseplate.baseplateHeight, baseplate.baseplateWidth, CV_8UC2, refData.data());
+    EXPECT_EQ(0.0, cv::norm(refImag, quantImage, cv::NORM_L1));
     std::cout << quantImage << std::endl;
 
 }

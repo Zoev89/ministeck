@@ -19,7 +19,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <layout class="QVBoxLayout" name="splitter">
+     <layout class="QVBoxLayout" name="splitter" stretch="2,1,8">
       <item>
        <widget class="ImageLabel" name="bitmap">
         <property name="sizePolicy">

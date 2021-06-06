@@ -14,7 +14,7 @@ public:
 
 private:
     MinisteckMatch FillMatch(int offsetY, int offsetX, int randVormIndex, const std::vector<cv::Mat> &randVorm, const Lab &color);
-
+    double EnkeltjePenalty(int offsetY, int offsetX, const std::vector<cv::Point> &points, const cv::Mat &quantizedImage);
     std::vector<MinisteckKleur> m_matchTable;
 };
 

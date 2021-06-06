@@ -185,6 +185,36 @@ std::shared_ptr<cv::Mat> Ministeck::PartCalculation()
     auto randVormen = m_randvorm->GetRandVormen(g_upscalingDecimation);
     m_ministeckVormen->CreateMatchTable(m_colorVec,randVormen);
     m_ministeckVormen->CalcParts(m_labImg, m_quantImg, m_baseplate,randVormen);
+
+    auto matchTable = m_ministeckVormen->GetMatchTable();
+    int enkeltje = 0;
+    int tweetje = 0;
+    int drietje = 0;
+    int vierkant =0;
+    int hoekje = 0;
+    for (const auto &color: matchTable)
+    {
+        enkeltje += color.stukjesPerVorm.at(Vorm::Enkeltje);
+        tweetje += color.stukjesPerVorm.at(Vorm::Tweetje);
+        drietje += color.stukjesPerVorm.at(Vorm::Drietje);
+        vierkant += color.stukjesPerVorm.at(Vorm::Vierkant);
+        hoekje += color.stukjesPerVorm.at(Vorm::Hoekje);
+
+        std::cout << color.color.naam
+                  << " E " << color.stukjesPerVorm.at(Vorm::Enkeltje) << "(" << color.stukjesPerVorm.at(Vorm::Enkeltje)/color.totaalAantalStukjes *42 << ") "
+                  << " T " << color.stukjesPerVorm.at(Vorm::Tweetje) << "(" << color.stukjesPerVorm.at(Vorm::Tweetje)/color.totaalAantalStukjes *42 << ") "
+                  << " D " << color.stukjesPerVorm.at(Vorm::Drietje) << "(" << color.stukjesPerVorm.at(Vorm::Drietje)/color.totaalAantalStukjes *42 << ") "
+                  << " V " << color.stukjesPerVorm.at(Vorm::Vierkant) << "(" << color.stukjesPerVorm.at(Vorm::Vierkant)/color.totaalAantalStukjes *42 << ") "
+                  << " H " << color.stukjesPerVorm.at(Vorm::Hoekje) << "(" << color.stukjesPerVorm.at(Vorm::Hoekje)/color.totaalAantalStukjes *42 << ") "
+                  << std::endl;
+    }
+    std::cout << "Totals:\n"
+             << enkeltje << " \n"
+             << tweetje << " \n"
+             << drietje << " \n"
+             << vierkant << " \n"
+             << hoekje << " \n"
+             << enkeltje + 2* tweetje + 3*drietje+4*vierkant + 3*hoekje << std::endl;
     auto scaledImage = m_scaledOuputImage->RenderImage(m_quantImg, baseplate, m_colorVec, randVormen);
     return scaledImage;
 
